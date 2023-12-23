@@ -1,5 +1,12 @@
 import io
 
+fn test(int testint){
+    testint = 12;
+    write(testint);
+}
+
 fn main(args){
-    write("Hello World From Pine!\n");
+    write("Hello, World!\n");
+    int leo = 19;
+    test(leo);
 }
