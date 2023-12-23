@@ -1,0 +1,14 @@
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/linux-x64/Pine
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/linux-x64/Pine.deps.json
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/linux-x64/Pine.runtimeconfig.json
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/linux-x64/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/linux-x64/Pine.pdb
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.GeneratedMSBuildEditorConfig.editorconfig
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.AssemblyInfoInputs.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.AssemblyInfo.cs
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.csproj.CoreCompileInputs.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/refint/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.pdb
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/Pine.genruntimeconfig.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/linux-x64/ref/Pine.dll

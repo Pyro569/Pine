@@ -1,0 +1,5 @@
+import io
+
+fn main(args){
+    write("Hello World From Pine!\n");
+}

@@ -1,0 +1,14 @@
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/Pine
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/Pine.deps.json
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/Pine.runtimeconfig.json
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/bin/Debug/net8.0/Pine.pdb
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.GeneratedMSBuildEditorConfig.editorconfig
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.AssemblyInfoInputs.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.AssemblyInfo.cs
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.csproj.CoreCompileInputs.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/refint/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.pdb
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/Pine.genruntimeconfig.cache
+/home/nathan/Documents/Programming/Projects/Pine/obj/Debug/net8.0/ref/Pine.dll
