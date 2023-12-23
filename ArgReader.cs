@@ -9,6 +9,9 @@ namespace Pine
             for (int i = 0; i < args.Length; i++)
                 switch (args[i])
                 {
+                    case "-d":
+                        GCCComp.DebugMode = true;
+                        break;
                     case "-e":
                         Console.WriteLine("Version 0.1");
                         break;
