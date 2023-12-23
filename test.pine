@@ -2,9 +2,9 @@ import io
 import bool
 
 fn main(args){
-    string leo = "leo";
+    string forget_char_arrays = "I HATE CHAR ARRAYS";
+    write(forget_char_arrays);
 
-    leo += " is very cool!";
-
-    write(leo);
+    forget_char_arrays += ", CHAR ARRAYS SUCK";
+    write(forget_char_arrays);
 }

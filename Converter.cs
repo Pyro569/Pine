@@ -159,6 +159,9 @@ class Converter
                     else
                         ConvertedTokens.Add("/");
                     break;
+                case "return":
+                    ConvertedTokens.Add("return");
+                    break;
                 default:
                     if (inQuotation == true)
                         ConvertedTokens.Add(Tokens[i]);
@@ -256,7 +259,6 @@ class Converter
                                 }
                             }
                             ConvertedTokens.Add(");");
-
 
                             for (int z = stopPoint + 1; z > i; z--)
                                 Tokens.Remove(Tokens[z]);
