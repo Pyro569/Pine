@@ -4,9 +4,7 @@ import bool
 fn main(args){
     string leo = "leo";
 
-    if(leo == "frodo"){
-        write("Equal!\n");
-    }else{
-        write("Not Equal!\n");
-    }
+    leo += " is very cool!";
+
+    write(leo);
 }

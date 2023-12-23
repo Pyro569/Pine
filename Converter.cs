@@ -237,6 +237,30 @@ class Converter
                                     Tokens.Remove(Tokens[k]);
                             }
                         }
+                        else if (Tokens[i + 2] == "+" && Tokens[i + 3] == "=")
+                        {
+                            if (!ConvertedTokens.Contains("#include <cstring>"))
+                                ConvertedTokens.Insert(0, "#include <cstring>\n");
+
+                            int stopPoint = i + 8;
+                            ConvertedTokens.Add("strcat(" + Tokens[i] + ",\"");
+                            for (int k = i + 6; k < Tokens.Count; k++)
+                            {
+                                if (Tokens[k] != "\"")
+                                    ConvertedTokens.Add(Tokens[k]);
+                                else
+                                {
+                                    ConvertedTokens.Add(Tokens[k]);
+                                    stopPoint = k;
+                                    break;
+                                }
+                            }
+                            ConvertedTokens.Add(");");
+
+
+                            for (int z = stopPoint + 1; z > i; z--)
+                                Tokens.Remove(Tokens[z]);
+                        }
                         else
                             ConvertedTokens.Add(Tokens[i]);
                     }
