@@ -192,3 +192,4 @@
 /home/nathan/Documents/Programming/Projects/Pine/obj/Release/net6.0/linux-x64/Pine.pdb
 /home/nathan/Documents/Programming/Projects/Pine/obj/Release/net6.0/linux-x64/Pine.genruntimeconfig.cache
 /home/nathan/Documents/Programming/Projects/Pine/obj/Release/net6.0/linux-x64/ref/Pine.dll
+/home/nathan/Documents/Programming/Projects/Pine/obj/Release/net6.0/linux-x64/Pine.sourcelink.json
