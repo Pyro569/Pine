@@ -22,18 +22,15 @@ class GCCComp
             if (OperatingSystem.Contains("Linux"))
             {
                 Process.Start("mv", " a.out " + BinaryName);
-                if (!DebugMode)
-                {   //if debug mode is not on remove the main.cpp file
+                if (!DebugMode)//if debug mode is not on remove the main.cpp file
                     Process.Start("rm", "Main.cpp");
-                }
+                Process.Start("chmod", "+x " + BinaryName);
             }
             else if (OperatingSystem.Contains("Windows"))
             {
                 Process.Start("ren a.out " + BinaryName);
                 if (!DebugMode)
-                {   //if debug mode is not on remove the main.cpp file
                     Process.Start("del", "Main.cpp");
-                }
             }
         }
         catch
