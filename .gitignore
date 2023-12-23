@@ -1,5 +1,5 @@
-/bin/
-/obj/
+bin/
+obj/
 Pine.csproj
 Pine.sln
 Main.cpp
