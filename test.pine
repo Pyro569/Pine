@@ -1,12 +1,12 @@
 import io
-
-fn test(int testint){
-    testint = 12;
-    write(testint);
-}
+import bool
 
 fn main(args){
-    write("Hello, World!\n");
-    int leo = 19;
-    test(leo);
+    string leo = "leo";
+
+    if(leo == "frodo"){
+        write("Equal!\n");
+    }else{
+        write("Not Equal!\n");
+    }
 }

@@ -5,6 +5,7 @@ class Converter
     private static List<string> StringsDeclared = new List<string>();
     private static List<string> FloatsDeclared = new List<string>();
     private static List<string> FunctionsDeclared = new List<string>();
+    private static List<string> BoolsDeclared = new List<string>();
 
     static bool inQuotation = false;
 
@@ -14,14 +15,27 @@ class Converter
         {
             switch (Tokens[i])
             {
+                case "true":
+                    ConvertedTokens.Add("true");
+                    break;
+                case "false":
+                    ConvertedTokens.Add("false");
+                    break;
+                case ">":
+                    ConvertedTokens.Add(">");
+                    break;
+                case "<":
+                    ConvertedTokens.Add("<");
+                    break;
+                case "!":
+                    ConvertedTokens.Add("!");
+                    break;
                 case "(":
                     ConvertedTokens.Add("(");
                     break;
-
                 case ")":
                     ConvertedTokens.Add(")");
                     break;
-
                 case "\"":
                     ConvertedTokens.Add("\"");
                     if (inQuotation)
@@ -29,39 +43,33 @@ class Converter
                     else
                         inQuotation = true;
                     break;
-
                 case ";":
                     ConvertedTokens.Add(";");
                     break;
-
                 case ",":
                     ConvertedTokens.Add(",");
                     break;
-
                 case " ":
                     ConvertedTokens.Add(" ");
                     break;
-
                 case "{":
                     ConvertedTokens.Add("{");
                     break;
-
                 case "}":
                     ConvertedTokens.Add("}");
                     break;
-
                 case "=":
                     ConvertedTokens.Add("=");
                     break;
-
                 case "+":
                     ConvertedTokens.Add("+");
                     break;
-
                 case "-":
                     ConvertedTokens.Add("-");
                     break;
-
+                case "*":
+                    ConvertedTokens.Add("*");
+                    break;
                 case "fn":
                     if (Tokens[i + 2] == "main")
                         ConvertedTokens.Add("int");
@@ -73,23 +81,18 @@ class Converter
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
-
                 case "main":
                     ConvertedTokens.Add("main");
                     break;
-
                 case "args":
                     ConvertedTokens.Add("int argc, char** argv");
                     break;
-
                 case "import":
                     Imports.Import(Tokens, i, ConvertedTokens);
                     break;
-
                 case "write":
-                    IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
+                    IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared, BoolsDeclared);
                     break;
-
                 case "int":
                     ConvertedTokens.Add("int ");
                     if (Tokens[i + 1] == " ")
@@ -99,7 +102,6 @@ class Converter
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
-
                 case "string":
                     ConvertedTokens.Add("char ");
                     if (Tokens[i + 1] == " ")
@@ -109,7 +111,6 @@ class Converter
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
-
                 case "float":
                     ConvertedTokens.Add("float ");
                     if (Tokens[i + 1] == " ")
@@ -119,7 +120,15 @@ class Converter
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
-
+                case "bool":
+                    ConvertedTokens.Add("bool ");
+                    if (Tokens[i + 1] == " ")
+                    {
+                        ConvertedTokens.Add(Tokens[i + 2]);
+                        BoolsDeclared.Add(Tokens[i + 2]);
+                        Tokens.Remove(Tokens[i + 2]);
+                    }
+                    break;
                 case "if":
                     ConvertedTokens.Add("if");
                     break;
@@ -128,6 +137,12 @@ class Converter
                     ConvertedTokens.Add("else");
                     break;
 
+                case "while":
+                    ConvertedTokens.Add("while");
+                    break;
+                case "for":
+                    ConvertedTokens.Add("for");
+                    break;
                 case "/":
                     if (Tokens[i + 1] == "/")
                     {
@@ -141,8 +156,9 @@ class Converter
                                 break;
                         }
                     }
+                    else
+                        ConvertedTokens.Add("/");
                     break;
-
                 default:
                     if (inQuotation == true)
                         ConvertedTokens.Add(Tokens[i]);
@@ -154,35 +170,78 @@ class Converter
                         ConvertedTokens.Add(Tokens[i]);
                     else if (FunctionsDeclared.Contains(Tokens[i]))
                         ConvertedTokens.Add(Tokens[i]);
+                    else if (BoolsDeclared.Contains(Tokens[i]))
+                        ConvertedTokens.Add(Tokens[i]);
                     //write the string variable or reallocate the value
                     else if (StringsDeclared.Contains(Tokens[i]))
                     {
                         //check if the next token is an equals sign so string can be reallocated in C
-                        if (Tokens[i + 2] == "=")
+                        if (Tokens[i + 2] == "=" || Tokens[i + 2] == "!")
                         {
-                            if (!ConvertedTokens.Contains("#include <string.h>"))
-                                ConvertedTokens.Insert(0, "#include <string.h>\n");
+                            if (Tokens[i + 3] != "=")
+                            {
+                                if (!ConvertedTokens.Contains("#include <string.h>"))
+                                    ConvertedTokens.Insert(0, "#include <string.h>\n");
 
-                            ConvertedTokens.Add("strcpy(" + Tokens[i] + ",\"");
-                            int stopPoint = 0;
-                            for (int z = i + 5; z < Tokens.Count; z++)
-                                if (Tokens[z] != "\"")
-                                    ConvertedTokens.Add(Tokens[z]);
+                                ConvertedTokens.Add("strcpy(" + Tokens[i] + ",\"");
+                                int stopPoint = 0;
+                                for (int z = i + 5; z < Tokens.Count; z++)
+                                    if (Tokens[z] != "\"")
+                                        ConvertedTokens.Add(Tokens[z]);
+                                    else
+                                    {
+                                        ConvertedTokens.Add("\")");
+                                        stopPoint = z;
+                                        break;
+                                    }
+
+                                for (int k = stopPoint; k > i; k--)
+                                    Tokens.Remove(Tokens[k]);
+                            }
+                            else
+                            {
+                                if (!ConvertedTokens.Contains("#include <string.h>"))
+                                    ConvertedTokens.Insert(0, "#include <string.h>\n");
+
+                                ConvertedTokens.Add("0 ");
+                                if (Tokens[i + 2] == "!")
+                                    ConvertedTokens.Add("!");
+                                else
+                                    ConvertedTokens.Add("=");
+
+                                ConvertedTokens.Add("= strcmp(" + Tokens[i] + ",");
+
+                                int stopPoint = i + 5;
+                                if (Tokens[i + 5] == "\"")
+                                {
+                                    ConvertedTokens.Add("\"");
+                                    for (int z = i + 6; z < Tokens.Count; z++)
+                                    {
+                                        if (Tokens[z] != "\"")
+                                            ConvertedTokens.Add(Tokens[z]);
+                                        else
+                                        {
+                                            ConvertedTokens.Add(Tokens[z]);
+                                            stopPoint = z;
+                                            break;
+                                        }
+                                    }
+                                    ConvertedTokens.Add(")");
+                                }
                                 else
                                 {
-                                    ConvertedTokens.Add("\")");
-                                    stopPoint = z;
-                                    break;
+                                    ConvertedTokens.Add(Tokens[i + 5]);
                                 }
 
-                            for (int k = stopPoint; k > i; k--)
-                                Tokens.Remove(Tokens[k]);
+                                for (int k = i; k < stopPoint; k++)
+                                    Tokens.Remove(Tokens[k]);
+                            }
                         }
                         else
                             ConvertedTokens.Add(Tokens[i]);
                     }
                     //check if the number is a proper float number i.e only one decimal point
-                    else if (Tokens[i].Contains("."))
+                    else if (Tokens[i].Contains('.'))
                     {
                         string[] splitToken = Tokens[i].Split(".");
                         if (splitToken[0].All(char.IsDigit) && splitToken[1].All(char.IsDigit) && splitToken.Length == 2)
