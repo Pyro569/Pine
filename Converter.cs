@@ -162,6 +162,9 @@ class Converter
                 case "return":
                     ConvertedTokens.Add("return");
                     break;
+                case "input":
+                    IOFunctions.input(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
+                    break;
                 default:
                     if (inQuotation == true)
                         ConvertedTokens.Add(Tokens[i]);

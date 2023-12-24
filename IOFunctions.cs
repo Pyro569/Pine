@@ -29,5 +29,28 @@ class IOFunctions
         }
     }
 
+    public static void input(List<string> Tokens, int i, List<string> ConvertedTokens, List<string> IntsDeclared, List<string> StringsDeclared, List<string> FloatsDeclared)
+    {
+        ConvertedTokens.Add("scanf");
+        if (IntsDeclared.Contains(Tokens[i + 2]))
+        {
+            ConvertedTokens.Add("(\"%d\",&" + Tokens[i + 2] + "");
+            for (int k = i; k < i + 2; k++)
+                Tokens.Remove(Tokens[k]);
+        }
+        else if (StringsDeclared.Contains(Tokens[i + 2]))
+        {
+            ConvertedTokens.Add("(\"%s\",&" + Tokens[i + 2] + "");
+            for (int k = i; k < i + 2; k++)
+                Tokens.Remove(Tokens[k]);
+        }
+        else if (FloatsDeclared.Contains(Tokens[i + 2]))
+        {
+            ConvertedTokens.Add("(\"%.6f\",&" + Tokens[i + 2] + "");
+            for (int k = i; k < i + 2; k++)
+                Tokens.Remove(Tokens[k]);
+        }
+    }
+
 
 }
