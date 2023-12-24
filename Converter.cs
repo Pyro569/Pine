@@ -70,6 +70,9 @@ class Converter
                 case "*":
                     ConvertedTokens.Add("*");
                     break;
+                case ":":
+                    ConvertedTokens.Add(":");
+                    break;
                 case "fn":
                     if (Tokens[i + 2] == "main")
                         ConvertedTokens.Add("int");
@@ -132,29 +135,32 @@ class Converter
                 case "if":
                     ConvertedTokens.Add("if");
                     break;
-
                 case "else":
                     ConvertedTokens.Add("else");
                     break;
-
                 case "while":
                     ConvertedTokens.Add("while");
                     break;
                 case "for":
                     ConvertedTokens.Add("for");
                     break;
+                case "switch":
+                    ConvertedTokens.Add("switch");
+                    break;
+                case "case":
+                    ConvertedTokens.Add("case");
+                    break;
+                case "break":
+                    ConvertedTokens.Add("break");
+                    break;
                 case "/":
                     if (Tokens[i + 1] == "/")
                     {
                         for (int k = i; k < Tokens.Count; k++)
-                        {
                             if (Tokens[k] != "/" && Tokens[k + 1] != "/")
-                            {
                                 Tokens.Remove(Tokens[k]);
-                            }
                             else
                                 break;
-                        }
                     }
                     else
                         ConvertedTokens.Add("/");
@@ -180,10 +186,8 @@ class Converter
                         ConvertedTokens.Add(Tokens[i]);
                     //write the string variable or reallocate the value
                     else if (StringsDeclared.Contains(Tokens[i]))
-                    {
                         //too much string logic so it has been broken into a separate class
                         StringLogic.StringTokenLogic(Tokens, i, ConvertedTokens);
-                    }
                     //check if the number is a proper float number i.e only one decimal point
                     else if (Tokens[i].Contains('.'))
                     {
@@ -191,7 +195,8 @@ class Converter
                         if (splitToken[0].All(char.IsDigit) && splitToken[1].All(char.IsDigit) && splitToken.Length == 2)
                             ConvertedTokens.Add(Tokens[i]);
                     }
-
+                    else if (Tokens[i].All(char.IsDigit))
+                        ConvertedTokens.Add(Tokens[i]);
                     break;
             }
         }
@@ -204,5 +209,7 @@ class Converter
                 sw.Write(ConvertedTokens[i]);
             }
         }
+
+        Analysis.AnalyzeTokens(Tokens);
     }
 }

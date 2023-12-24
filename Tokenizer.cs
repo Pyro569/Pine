@@ -18,7 +18,7 @@ class Tokenizer
                 && FileContents[i][j] != '}' && FileContents[i][j] != '=' && FileContents[i][j] != '<' && FileContents[i][j] != '>' && FileContents[i][j] != '+'
                 && FileContents[i][j] != '-' && FileContents[i][j] != '*' && FileContents[i][j] != '/' && FileContents[i][j] != '#' && FileContents[i][j] != '!'
                 && FileContents[i][j] != '%' && FileContents[i][j] != '&' && FileContents[i][j] != '|' && FileContents[i][j] != '[' && FileContents[i][j] != ']'
-                && FileContents[i][j] != ' ' && FileContents[i][j] != ',' && FileContents[i][j] != '\n')
+                && FileContents[i][j] != ' ' && FileContents[i][j] != ',' && FileContents[i][j] != '\n' && FileContents[i][j] != ':')
                 {
                     currentToken += FileContents[i][j];
                 }
