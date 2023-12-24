@@ -131,6 +131,9 @@ class Converter
                         BoolsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
+
+                    if (!ConvertedTokens.Contains("#include <stdbool.h>"))
+                        ConvertedTokens.Insert(0, "#include <stdbool.h>\n");
                     break;
                 case "if":
                     ConvertedTokens.Add("if");

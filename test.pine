@@ -1,5 +1,4 @@
 import io
-import bool
 
 fn main(args){
     string forget_char_arrays = "I HATE CHAR ARRAYS";
@@ -8,13 +7,13 @@ fn main(args){
     forget_char_arrays += ", CHAR ARRAYS SUCK";
     write(forget_char_arrays);
 
-    int test = 12;
+    bool test = false;
     switch(test){
-        case 12:
-            write(test);
+        case 0:
+            write("false\n");
             break;
-        case 13:
-            write(test);
+        case 1:
+            write("true\n");
             break;
     }
 }
