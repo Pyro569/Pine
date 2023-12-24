@@ -1,0 +1,7 @@
+fn main(){
+    int value = 0; 
+    while(value <= 10){
+        write(value);
+        value += 1;
+    }
+}

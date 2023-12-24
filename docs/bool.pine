@@ -1,0 +1,6 @@
+fn main(){
+    bool true_false = false;
+    write(true_false);
+    true_false = true;
+    write(true_false);
+}

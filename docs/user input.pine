@@ -1,0 +1,5 @@
+fn main(){
+    string user_input;
+    input(user_input);
+    write(user_input);
+}

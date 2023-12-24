@@ -1,0 +1,4 @@
+fn main(){
+    string hello_world = "Hello, World!\n";
+    write(hello_world);
+}

@@ -1,0 +1,4 @@
+fn main(){
+    int integer = 12;
+    integer = 19;
+}

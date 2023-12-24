@@ -22,6 +22,14 @@ class Errors
         Environment.Exit(errorCode);
     }
 
+    public static void ReturnVariableError(int errorCode, string errorMessage)
+    {
+        Console.WriteLine(Convert.ToString(errorCode) + " VAR: " + errorMessage);
+        AddThrownErrorToList(errorCode, "VAR " + errorMessage);
+        LogErrors();
+        Environment.Exit(errorCode);
+    }
+
     public static void AddThrownErrorToList(int errorCode, string errorMessage)
     {
         ErrorCodesThrown.Add(errorCode);

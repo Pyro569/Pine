@@ -1,0 +1,4 @@
+fn main(){
+    float pi = 3.1415926535;
+    write(pi);
+}

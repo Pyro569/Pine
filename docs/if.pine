@@ -1,0 +1,7 @@
+fn main(){
+    int value = 12;
+    
+    if(value == 12){
+        write("Equal!\n");
+    }
+}

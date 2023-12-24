@@ -226,6 +226,8 @@ class Converter
                         string[] splitToken = Tokens[i].Split(".");
                         if (splitToken[0].All(char.IsDigit) && splitToken[1].All(char.IsDigit) && splitToken.Length == 2)
                             ConvertedTokens.Add(Tokens[i]);
+                        else
+                            Errors.ReturnVariableError(100, "Floating point error (Contains more than one decimal point)");
                     }
                     else if (Tokens[i].All(char.IsDigit))
                         ConvertedTokens.Add(Tokens[i]);
