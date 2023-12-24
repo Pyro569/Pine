@@ -16,4 +16,11 @@ fn main(args){
             write("true\n");
             break;
     }
+
+    C{
+        int twelve = 12;
+    };
+
+    twelve += 1;
+    write(twelve);
 }

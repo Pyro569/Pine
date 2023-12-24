@@ -174,6 +174,35 @@ class Converter
                 case "input":
                     IOFunctions.input(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
                     break;
+                case "C":
+                    if (Tokens[i + 1] == "{")
+                    {
+                        int tokensToRemove = 0;
+                        for (int z = i + 2; z < Tokens.Count; z++)
+                        {
+                            if (Tokens[z] != "}" && Tokens[z + 1] != ";")
+                            {
+                                ConvertedTokens.Add(Tokens[z]);
+                                tokensToRemove += 1;
+                            }
+                            else if (Tokens[z] == "}" && Tokens[z + 1] == ";")
+                            {
+                                tokensToRemove += 2;
+                                break;
+                            }
+                            else
+                            {
+                                ConvertedTokens.Add(Tokens[z]);
+                                tokensToRemove += 1;
+                            }
+                        }
+
+                        for (int k = tokensToRemove; k > i; k--)
+                        {
+                            Tokens.Remove(Tokens[i + k]);
+                        }
+                    }
+                    break;
                 default:
                     if (inQuotation == true)
                         ConvertedTokens.Add(Tokens[i]);
