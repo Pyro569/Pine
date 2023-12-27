@@ -1,3 +1,5 @@
+using Pine;
+
 class Converter
 {
     public static List<string> ConvertedTokens = new List<string>();
@@ -8,87 +10,117 @@ class Converter
     private static List<string> BoolsDeclared = new List<string>();
 
     static bool inQuotation = false;
+    public static bool includedFile = false;
+
+    private static void AddToken(string Token)
+    {
+        if (!includedFile)
+            ConvertedTokens.Add(Token);
+        else
+            for (int i = 0; i < ConvertedTokens.Count; i++)
+            {
+                if (ConvertedTokens[i] == "main")
+                {
+                    ConvertedTokens.Insert(i, Token);
+                }
+            }
+    }
+
+    public static void FunctionScan(List<string> Tokens)
+    {
+        for (int i = 0; i < Tokens.Count; i++)
+            if (Tokens[i] == "fn")
+                if (Tokens[i + 2] != "main")
+                {
+                    FunctionsDeclared.Add(Tokens[i + 2]);
+                }
+    }
 
     public static void Convert(List<string> Tokens)
     {
         for (int i = 0; i < Tokens.Count; i++)
         {
+            if (i == Tokens.Count - 1 && ArgReader.IncludedFiles == false)
+                ArgReader.IncludedFiles = true;
+            else if (i == Tokens.Count - 1 && ArgReader.IncludedFiles == true)
+                ArgReader.IncludedFiles = false;
+
             switch (Tokens[i])
             {
                 case "true":
-                    ConvertedTokens.Add("true");
+                    AddToken("true");
                     break;
                 case "false":
-                    ConvertedTokens.Add("false");
+                    AddToken("false");
                     break;
                 case ">":
-                    ConvertedTokens.Add(">");
+                    AddToken(">");
                     break;
                 case "<":
-                    ConvertedTokens.Add("<");
+                    AddToken("<");
                     break;
                 case "!":
-                    ConvertedTokens.Add("!");
+                    AddToken("!");
                     break;
                 case "(":
-                    ConvertedTokens.Add("(");
+                    AddToken("(");
                     break;
                 case ")":
-                    ConvertedTokens.Add(")");
+                    AddToken(")");
                     break;
                 case "\"":
-                    ConvertedTokens.Add("\"");
+                    AddToken("\"");
                     if (inQuotation)
                         inQuotation = false;
                     else
                         inQuotation = true;
                     break;
                 case ";":
-                    ConvertedTokens.Add(";");
+                    AddToken(";");
                     break;
                 case ",":
-                    ConvertedTokens.Add(",");
+                    AddToken(",");
                     break;
                 case " ":
-                    ConvertedTokens.Add(" ");
+                    AddToken(" ");
                     break;
                 case "{":
-                    ConvertedTokens.Add("{");
+                    AddToken("{");
                     break;
                 case "}":
-                    ConvertedTokens.Add("}");
+                    AddToken("}");
                     break;
                 case "=":
-                    ConvertedTokens.Add("=");
+                    AddToken("=");
                     break;
                 case "+":
-                    ConvertedTokens.Add("+");
+                    AddToken("+");
                     break;
                 case "-":
-                    ConvertedTokens.Add("-");
+                    AddToken("-");
                     break;
                 case "*":
-                    ConvertedTokens.Add("*");
+                    AddToken("*");
                     break;
                 case ":":
-                    ConvertedTokens.Add(":");
+                    AddToken(":");
                     break;
                 case "fn":
                     if (Tokens[i + 2] == "main")
-                        ConvertedTokens.Add("int");
+                        AddToken("int");
                     else
                     {
-                        ConvertedTokens.Add("void ");
-                        ConvertedTokens.Add(Tokens[i + 2]);
+                        AddToken("void ");
+                        AddToken(Tokens[i + 2]);
                         FunctionsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
                 case "main":
-                    ConvertedTokens.Add("main");
+                    AddToken("main");
                     break;
                 case "args":
-                    ConvertedTokens.Add("int argc, char** argv");
+                    AddToken("int argc, char** argv");
                     break;
                 case "import":
                     Imports.Import(Tokens, i, ConvertedTokens);
@@ -96,65 +128,68 @@ class Converter
                 case "write":
                     IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared, BoolsDeclared);
                     break;
+                case "const":
+                    AddToken("const");
+                    break;
                 case "int":
-                    ConvertedTokens.Add("int ");
+                    AddToken("int ");
                     if (Tokens[i + 1] == " ")
                     {
-                        ConvertedTokens.Add(Tokens[i + 2]);
+                        AddToken(Tokens[i + 2]);
                         IntsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
                 case "string":
-                    ConvertedTokens.Add("char ");
+                    AddToken("char ");
                     if (Tokens[i + 1] == " ")
                     {
-                        ConvertedTokens.Add(Tokens[i + 2] + "[255]");
+                        AddToken(Tokens[i + 2] + "[255]");
                         StringsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
                 case "float":
-                    ConvertedTokens.Add("float ");
+                    AddToken("float ");
                     if (Tokens[i + 1] == " ")
                     {
-                        ConvertedTokens.Add(Tokens[i + 2]);
+                        AddToken(Tokens[i + 2]);
                         FloatsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
                     break;
                 case "bool":
-                    ConvertedTokens.Add("bool ");
+                    AddToken("bool ");
                     if (Tokens[i + 1] == " ")
                     {
-                        ConvertedTokens.Add(Tokens[i + 2]);
+                        AddToken(Tokens[i + 2]);
                         BoolsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
 
-                    if (!ConvertedTokens.Contains("#include <stdbool.h>"))
-                        ConvertedTokens.Insert(0, "#include <stdbool.h>\n");
+                    if (!ConvertedTokens.Contains("\n#include <stdbool.h>\n"))
+                        ConvertedTokens.Insert(0, "\n#include <stdbool.h>\n");
                     break;
                 case "if":
-                    ConvertedTokens.Add("if");
+                    AddToken("if");
                     break;
                 case "else":
-                    ConvertedTokens.Add("else");
+                    AddToken("else");
                     break;
                 case "while":
-                    ConvertedTokens.Add("while");
+                    AddToken("while");
                     break;
                 case "for":
-                    ConvertedTokens.Add("for");
+                    AddToken("for");
                     break;
                 case "switch":
-                    ConvertedTokens.Add("switch");
+                    AddToken("switch");
                     break;
                 case "case":
-                    ConvertedTokens.Add("case");
+                    AddToken("case");
                     break;
                 case "break":
-                    ConvertedTokens.Add("break");
+                    AddToken("break");
                     break;
                 case "/":
                     if (Tokens[i + 1] == "/")
@@ -166,10 +201,10 @@ class Converter
                                 break;
                     }
                     else
-                        ConvertedTokens.Add("/");
+                        AddToken("/");
                     break;
                 case "return":
-                    ConvertedTokens.Add("return");
+                    AddToken("return");
                     break;
                 case "input":
                     IOFunctions.input(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
@@ -182,7 +217,7 @@ class Converter
                         {
                             if (Tokens[z] != "}" && Tokens[z + 1] != ";")
                             {
-                                ConvertedTokens.Add(Tokens[z]);
+                                AddToken(Tokens[z]);
                                 tokensToRemove += 1;
                             }
                             else if (Tokens[z] == "}" && Tokens[z + 1] == ";")
@@ -192,30 +227,35 @@ class Converter
                             }
                             else
                             {
-                                ConvertedTokens.Add(Tokens[z]);
+                                AddToken(Tokens[z]);
                                 tokensToRemove += 1;
                             }
                         }
 
                         for (int k = tokensToRemove; k > i; k--)
-                        {
                             Tokens.Remove(Tokens[i + k]);
-                        }
                     }
+                    break;
+                case "include":
+                    string fileName = Tokens[i + 2];
+                    fileName = fileName.Replace(";", "");
+                    ArgReader.IncludedFileNames.Add(fileName);
+                    Tokens.RemoveRange(i + 1, i + 3);
+                    Tokenizer.IncludedFileTokenize(fileName);
                     break;
                 default:
                     if (inQuotation == true)
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     else if (Tokens[i].All(char.IsDigit))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     else if (IntsDeclared.Contains(Tokens[i]))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     else if (FloatsDeclared.Contains(Tokens[i]))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     else if (FunctionsDeclared.Contains(Tokens[i]))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     else if (BoolsDeclared.Contains(Tokens[i]))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     //write the string variable or reallocate the value
                     else if (StringsDeclared.Contains(Tokens[i]))
                         //too much string logic so it has been broken into a separate class
@@ -225,25 +265,16 @@ class Converter
                     {
                         string[] splitToken = Tokens[i].Split(".");
                         if (splitToken[0].All(char.IsDigit) && splitToken[1].All(char.IsDigit) && splitToken.Length == 2)
-                            ConvertedTokens.Add(Tokens[i]);
+                            AddToken(Tokens[i]);
                         else
                             Errors.ReturnVariableError(100, "Floating point error (Contains more than one decimal point)");
                     }
                     else if (Tokens[i].All(char.IsDigit))
-                        ConvertedTokens.Add(Tokens[i]);
+                        AddToken(Tokens[i]);
                     break;
             }
         }
 
-        //write all of the converted tokens to the Main.cpp file
-        using (StreamWriter sw = new StreamWriter("Main.cpp"))
-        {
-            for (int i = 0; i < ConvertedTokens.Count; i++)
-            {
-                sw.Write(ConvertedTokens[i]);
-            }
-        }
-
-        Analysis.AnalyzeTokens(Tokens);
+        //Analysis.AnalyzeTokens(Tokens);
     }
 }

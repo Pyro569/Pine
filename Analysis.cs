@@ -9,7 +9,7 @@ class Analysis
                 case "break":
                     if (Tokens[i + 1] == ";")
                     {
-                        if (Tokens[i + 2] != "}")
+                        if (Tokens[i + 2] != "}" || Tokens[i + 2] != "case")
                         {
                             //ReturnAnalyzedMistake("Unreachable code", new List<int>() { i, i + 1, i + 2, i + 3 }, Tokens);
                         }

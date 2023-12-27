@@ -18,6 +18,4 @@ class FileChecker
         else
             Errors.ReturnIOError(100, "File cannot be found");
     }
-
-    //TODO: Have the file checker check for any unrecognized syntax before converting each token
 }
