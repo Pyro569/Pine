@@ -42,7 +42,7 @@ class Tokenizer
 
             currentToken = "";
         }
-        Converter.FunctionScan(Tokens);
+        Converter.DataControlScan(Tokens);
 
         //start the conversion process of the tokens
         Converter.Convert(Tokens);
@@ -111,6 +111,6 @@ class Tokenizer
             currentToken = "";
         }
 
-        Converter.FunctionScan(newTokens);
+        Converter.DataControlScan(newTokens);
     }
 }

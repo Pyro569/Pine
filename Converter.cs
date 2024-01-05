@@ -26,14 +26,24 @@ class Converter
             }
     }
 
-    public static void FunctionScan(List<string> Tokens)
+    public static void DataControlScan(List<string> Tokens)
     {
         for (int i = 0; i < Tokens.Count; i++)
             if (Tokens[i] == "fn")
+            {
                 if (Tokens[i + 2] != "main")
                 {
                     FunctionsDeclared.Add(Tokens[i + 2]);
                 }
+            }
+            else if (Tokens[i] == "int")
+                IntsDeclared.Add(Tokens[i + 2]);
+            else if (Tokens[i] == "string")
+                StringsDeclared.Add(Tokens[i + 2]);
+            else if (Tokens[i] == "float")
+                StringsDeclared.Add(Tokens[i + 2]);
+            else if (Tokens[i] == "bool")
+                BoolsDeclared.Add(Tokens[i + 2]);
     }
 
     public static void Convert(List<string> Tokens)
@@ -105,6 +115,12 @@ class Converter
                 case ":":
                     AddToken(":");
                     break;
+                case "[":
+                    AddToken("[");
+                    break;
+                case "]":
+                    AddToken("]");
+                    break;
                 case "fn":
                     if (Tokens[i + 2] == "main")
                         AddToken("int");
@@ -145,6 +161,11 @@ class Converter
                     if (Tokens[i + 1] == " ")
                     {
                         AddToken(Tokens[i + 2] + "[255]");
+                        if (Tokens[i + 3] == "[")
+                        {
+                            AddToken("[255");
+                            Tokens.Remove(Tokens[i + 3]);
+                        }
                         StringsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
@@ -195,7 +216,7 @@ class Converter
                     if (Tokens[i + 1] == "/")
                     {
                         for (int k = i; k < Tokens.Count; k++)
-                            if (Tokens[k] != "/" && Tokens[k + 1] != "/")
+                            if (Tokens[k] == "*" && Tokens[k + 1] == "/")
                                 Tokens.Remove(Tokens[k]);
                             else
                                 break;
@@ -224,11 +245,6 @@ class Converter
                             {
                                 tokensToRemove += 2;
                                 break;
-                            }
-                            else
-                            {
-                                AddToken(Tokens[z]);
-                                tokensToRemove += 1;
                             }
                         }
 
