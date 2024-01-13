@@ -187,6 +187,9 @@ class Converter
                     IOFunctions.writeFile(Tokens, i, ConvertedTokens, StringsDeclared);
                     MethodsUsed.Add("writeFile");
                     break;
+                case "infLoop":
+                    AddToken("while(1)");
+                    break;
                 case "const":
                     AddToken("const");
                     break;
@@ -303,7 +306,7 @@ class Converter
                         AddToken(Tokens[i]);
                     else if (FloatsDeclared.Contains(Tokens[i]))
                         AddToken(Tokens[i]);
-                    else if (FunctionsDeclared.Contains(Tokens[i]))
+                    else if (FunctionsDeclared.Contains(Tokens[i]) && Tokens[i - 2] != "fn")
                         AddToken(Tokens[i]);
                     else if (BoolsDeclared.Contains(Tokens[i]))
                         AddToken(Tokens[i]);
