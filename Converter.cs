@@ -86,10 +86,16 @@ class Converter
                     else
                         inQuotation = true;
                     break;
+                case "\\":
+                    if (Tokens[i + 1] == "\"")
+                        AddToken("\\\"");
+                    break;
                 case ";":
                     AddToken(";");
                     if (MethodsUsed[MethodsUsed.Count - 1] == "writeLine")
                         AddToken("printf(\"\\n\");");
+                    if (MethodsUsed[MethodsUsed.Count - 1] == "createFile")
+                        AddToken("fclose(fptr);");
                     break;
                 case ",":
                     AddToken(",");
@@ -154,6 +160,14 @@ class Converter
                 case "writeLine":
                     IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared, BoolsDeclared);
                     MethodsUsed.Add("writeLine");
+                    break;
+                case "createFile":
+                    IOFunctions.createFile(Tokens, i, ConvertedTokens, StringsDeclared);
+                    MethodsUsed.Add("createFile");
+                    break;
+                case "writeFile":
+                    IOFunctions.writeFile(Tokens, i, ConvertedTokens, StringsDeclared);
+                    MethodsUsed.Add("writeFile");
                     break;
                 case "const":
                     AddToken("const");

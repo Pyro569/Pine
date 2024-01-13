@@ -58,5 +58,82 @@ class IOFunctions
         }
     }
 
+    public static void createFile(List<string> Tokens, int i, List<string> ConvertedTokens, List<string> StringsDeclared)
+    {
+        if (!ConvertedTokens.Contains("\n#include <stdio.h>\n"))
+            ConvertedTokens.Insert(0, "\n#include <stdio.h>\n");
 
+        if (!StringsDeclared.Contains("fptr"))
+        {
+            ConvertedTokens.Add("FILE *fptr;");
+            StringsDeclared.Add("fptr");
+        }
+        ConvertedTokens.Add("fptr = fopen");
+
+        int removeTo = 0;
+
+        for (int j = i + 1; j < Tokens.Count; j++)
+        {
+            if (Tokens[j] != ")")
+                ConvertedTokens.Add(Tokens[j]);
+            else
+            {
+                removeTo = j - 1;
+                break;
+            }
+        }
+
+        ConvertedTokens[ConvertedTokens.Count - 1] += ", \"w\"";
+
+        for (int j = removeTo; j > i; j--)
+            Tokens.Remove(Tokens[j]);
+    }
+
+    public static void writeFile(List<string> Tokens, int i, List<string> ConvertedTokens, List<string> StringsDeclared)
+    {
+        if (!ConvertedTokens.Contains("\n#include <stdio.h>\n"))
+            ConvertedTokens.Insert(0, "\n#include <stdio.h>\n");
+
+        if (!StringsDeclared.Contains("fptr"))
+        {
+            ConvertedTokens.Add("FILE *fptr;");
+            StringsDeclared.Add("fptr");
+        }
+        ConvertedTokens.Add("fptr = fopen");
+
+        int removeTo = 0;
+
+        for (int j = i + 1; j < Tokens.Count; j++)
+        {
+            if (Tokens[j] != ",")
+                ConvertedTokens.Add(Tokens[j]);
+            else
+            {
+                removeTo = j;
+                break;
+            }
+        }
+
+        ConvertedTokens[ConvertedTokens.Count - 1] += ", \"w\");";
+
+        ConvertedTokens.Add("fprintf(fptr, ");
+
+        for (int j = removeTo + 1; j < Tokens.Count; j++)
+        {
+            if (Tokens[j] != ")" && Tokens[j + 1] != ";")
+                ConvertedTokens.Add(Tokens[j]);
+            else if (Tokens[j] == ")" && Tokens[j + 1] != ";")
+                ConvertedTokens.Add(Tokens[j]);
+            else if (Tokens[j] != ")" && Tokens[j + 1] == ";")
+                ConvertedTokens.Add(Tokens[j]);
+            else
+            {
+                removeTo = j - 1;
+                break;
+            }
+        }
+
+        for (int j = removeTo; j > i; j--)
+            Tokens.Remove(Tokens[j]);
+    }
 }

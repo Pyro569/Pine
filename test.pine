@@ -1,6 +1,6 @@
 fn main(args){
-    int value = 19;
-    value += 1;
-    write("Value is: ");
-    writeLine(value);
+    createFile("createdFile.pine");
+    writeFile("createdFile.pine", "fn main(){
+        write(\"Hello, World!\\n\");
+    }");
 }
