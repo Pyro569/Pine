@@ -8,6 +8,7 @@ class Converter
     private static List<string> FloatsDeclared = new List<string>();
     private static List<string> FunctionsDeclared = new List<string>();
     private static List<string> BoolsDeclared = new List<string>();
+    private static List<string> MethodsUsed = new List<string>();
 
     static bool inQuotation = false;
     public static bool includedFile = false;
@@ -87,6 +88,8 @@ class Converter
                     break;
                 case ";":
                     AddToken(";");
+                    if (MethodsUsed[MethodsUsed.Count - 1] == "writeLine")
+                        AddToken("printf(\"\\n\");");
                     break;
                 case ",":
                     AddToken(",");
@@ -104,7 +107,8 @@ class Converter
                     AddToken("=");
                     break;
                 case "+":
-                    AddToken("+");
+                    if (MethodsUsed[MethodsUsed.Count - 1] != "writeLine")
+                        AddToken("+");
                     break;
                 case "-":
                     AddToken("-");
@@ -137,12 +141,19 @@ class Converter
                     break;
                 case "args":
                     AddToken("int argc, char** argv");
+                    IntsDeclared.Add("argc");
+                    StringsDeclared.Add("argv");
                     break;
                 case "import":
                     Imports.Import(Tokens, i, ConvertedTokens);
                     break;
                 case "write":
                     IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared, BoolsDeclared);
+                    MethodsUsed.Add("write");
+                    break;
+                case "writeLine":
+                    IOFunctions.Write(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared, BoolsDeclared);
+                    MethodsUsed.Add("writeLine");
                     break;
                 case "const":
                     AddToken("const");
@@ -154,6 +165,7 @@ class Converter
                         AddToken(Tokens[i + 2]);
                         IntsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
+                        MethodsUsed.Add("int");
                     }
                     break;
                 case "string":
@@ -168,6 +180,7 @@ class Converter
                         }
                         StringsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
+                        MethodsUsed.Add("string");
                     }
                     break;
                 case "float":
@@ -177,6 +190,7 @@ class Converter
                         AddToken(Tokens[i + 2]);
                         FloatsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
+                        MethodsUsed.Add("float");
                     }
                     break;
                 case "bool":
@@ -229,6 +243,7 @@ class Converter
                     break;
                 case "input":
                     IOFunctions.input(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
+                    MethodsUsed.Add("input");
                     break;
                 case "C":
                     if (Tokens[i + 1] == "{")
