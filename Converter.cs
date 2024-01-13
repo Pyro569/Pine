@@ -21,9 +21,7 @@ class Converter
             for (int i = 0; i < ConvertedTokens.Count; i++)
             {
                 if (ConvertedTokens[i] == "main")
-                {
                     ConvertedTokens.Insert(i, Token);
-                }
             }
     }
 
@@ -92,10 +90,13 @@ class Converter
                     break;
                 case ";":
                     AddToken(";");
-                    if (MethodsUsed[MethodsUsed.Count - 1] == "writeLine")
-                        AddToken("printf(\"\\n\");");
-                    if (MethodsUsed[MethodsUsed.Count - 1] == "createFile")
-                        AddToken("fclose(fptr);");
+                    if (MethodsUsed.Count >= 1)
+                    {
+                        if (MethodsUsed[MethodsUsed.Count - 1] == "writeLine")
+                            AddToken("printf(\"\\n\");");
+                        if (MethodsUsed[MethodsUsed.Count - 1] == "createFile")
+                            AddToken("fclose(fptr);");
+                    }
                     break;
                 case ",":
                     AddToken(",");
@@ -130,6 +131,9 @@ class Converter
                     break;
                 case "]":
                     AddToken("]");
+                    break;
+                case "&":
+                    AddToken("&");
                     break;
                 case "fn":
                     if (Tokens[i + 2] == "main")

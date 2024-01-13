@@ -1,5 +1,7 @@
-fn main(args){
-    createFile("test.txt");
+include test2.pine;
 
-    writeFile("test.txt", "testing!");
+fn main(args){
+    int num = 7;
+    test(num);
+    write("hello, world 2!\n");
 }
