@@ -1,7 +1,11 @@
-include test2.pine;
-
 fn main(args){
-    int num = 7;
-    test(num);
-    write("hello, world 2!\n");
+    /*this is a comment*/
+    /*
+    this
+    is 
+    a 
+    multi-line
+    comment
+    */
+    writeLine("Hello, World!");
 }

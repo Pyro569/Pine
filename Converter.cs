@@ -98,6 +98,20 @@ class Converter
                             AddToken("fclose(fptr);");
                     }
                     break;
+                case "/":
+                    if (Tokens[i + 1] == "*")
+                    {
+                        for (int j = i + 2; j < Tokens.Count; j++)
+                            if (Tokens[j] == "*")
+                                if (Tokens[j + 1] == "/")
+                                {
+                                    i = j + 2;
+                                    break;
+                                }
+                    }
+                    else
+                        AddToken("/");
+                    break;
                 case ",":
                     AddToken(",");
                     break;
@@ -243,18 +257,6 @@ class Converter
                     break;
                 case "break":
                     AddToken("break");
-                    break;
-                case "/":
-                    if (Tokens[i + 1] == "/")
-                    {
-                        for (int k = i; k < Tokens.Count; k++)
-                            if (Tokens[k] == "*" && Tokens[k + 1] == "/")
-                                Tokens.Remove(Tokens[k]);
-                            else
-                                break;
-                    }
-                    else
-                        AddToken("/");
                     break;
                 case "return":
                     AddToken("return");
