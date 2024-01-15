@@ -1,42 +1,7 @@
 fn main(args){
-    /*create an infinite loop*/
-    infLoop{
-        writeLine("Welcome to the Pine Calculator!");
-
-        /*initialize the two integers that will hold user inputs*/
-        int firstNum;
-        int secondNum;
-
-        /*prompt for the first number and set firstNum as the input*/
-        write("Please enter a first number: ");
-        input(firstNum);
-
-        /*prompt for the second number and set secondNum as the input*/
-        write("Please enter a second number: ");
-        input(secondNum);
-
-        /*initialize the string that will hold the math operation input*/
-        string mathOp;
-
-        /*prompt the user for input on the math operation and set mathOp as the input*/
-        write("Type add for addition, sub for subtraction, mul for multiplication, div for division: ");
-        input(mathOp);
-
-        int result;
-
-        /*check the result of mathOp against the operations*/
-        if(mathOp == "add")
-            result = firstNum + secondNum;
-        if(mathOp == "sub")
-            result = firstNum - secondNum;
-        if(mathOp == "mul")
-            result = firstNum * secondNum;
-        if(mathOp == "div")
-            result = firstNum / secondNum;
-
-        /*print out the result of the math operation*/
-        write("The answer is: ");
-        write(result);
-        write("\n\n");
-    }
+    int array[] = {0, 9, 12, 17};
+    add(array, 19);
+    int size = length(array);
+    writeLine(size);
+    writeLine(array[4]);
 }

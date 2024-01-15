@@ -268,6 +268,26 @@ class Converter
                     IOFunctions.input(Tokens, i, ConvertedTokens, IntsDeclared, StringsDeclared, FloatsDeclared);
                     MethodsUsed.Add("input");
                     break;
+                case "add":
+                    AddToken(Tokens[i + 2] + "[(sizeof(" + Tokens[i + 2] + ")/4)] = ");
+                    int removeTo = 0;
+                    for (int j = i + 5; j < Tokens.Count; j++)
+                        if (Tokens[j] != ")")
+                            AddToken(Tokens[j]);
+                        else
+                        {
+                            removeTo = j;
+                            break;
+                        }
+
+                    for (int z = removeTo; z > i; z--)
+                        Tokens.Remove(Tokens[z]);
+                    break;
+                case "length":
+                    AddToken("sizeof" + Tokens[i + 1] + Tokens[i + 2] + Tokens[i + 3] + "/4");
+                    for (int j = i; j < i + 3; j++)
+                        Tokens.Remove(Tokens[j]);
+                    break;
                 case "C":
                     if (Tokens[i + 1] == "{")
                     {
@@ -289,6 +309,8 @@ class Converter
                         for (int k = tokensToRemove; k > i; k--)
                             Tokens.Remove(Tokens[i + k]);
                     }
+                    else
+                        AddToken("C");
                     break;
                 case "include":
                     string fileName = Tokens[i + 2];
