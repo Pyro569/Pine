@@ -3,4 +3,7 @@ std math
 fn main(args){
     int sqrt_nine = sqrt(9);
     writeLine(sqrt_nine);
+    
+    int two_squared = pow(2, 8);
+    writeLine(two_squared);
 }

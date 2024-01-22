@@ -6,13 +6,11 @@ class stdLib
         {
             case "math":
                 for (int z = 0; z < Math.MathScript.Count; z++)
-                {
-                    int placement = i + 3;
                     ConvertedTokens.Add(Math.MathScript[z]);
-                }
+
+                Converter.IntsDeclared.Add("sqrt");
+                Converter.IntsDeclared.Add("pow");
                 break;
         }
-
-        Converter.IntsDeclared.Add("sqrt");
     }
 }

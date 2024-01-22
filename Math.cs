@@ -8,5 +8,12 @@ class Math
         "}",
         "}",
         "}",
+        "int pow(int base, int power){",
+        "int product = base;",
+        "for(int i = 1; i < power; i++){",
+        "product = product * base;",
+        "}",
+        "return product;",
+        "}",
     };
 }
