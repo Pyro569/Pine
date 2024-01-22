@@ -32,6 +32,8 @@ class GCCComp
                 if (!DebugMode)
                     Process.Start("del", "Main.c");
             }
+
+            Errors.NonFatalLog(0, "COMP", "Successfully compiled");
         }
         catch
         {

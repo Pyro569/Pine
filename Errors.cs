@@ -30,6 +30,12 @@ class Errors
         Environment.Exit(errorCode);
     }
 
+    public static void NonFatalLog(int errorCode, string logType, string logMessage)
+    {
+        AddThrownErrorToList(errorCode, logType + " " + logMessage);
+        LogErrors();
+    }
+
     public static void AddThrownErrorToList(int errorCode, string errorMessage)
     {
         ErrorCodesThrown.Add(errorCode);

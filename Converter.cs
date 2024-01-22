@@ -284,7 +284,7 @@ class Converter
                         Tokens.Remove(Tokens[z]);
                     break;
                 case "length":
-                    AddToken("sizeof" + Tokens[i + 1] + Tokens[i + 2] + Tokens[i + 3] + "/4");
+                    AddToken("sizeof" + Tokens[i + 1] + Tokens[i + 2] + Tokens[i + 3]);
                     for (int j = i; j < i + 3; j++)
                         Tokens.Remove(Tokens[j]);
                     break;
