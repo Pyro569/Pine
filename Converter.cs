@@ -280,6 +280,8 @@ class Converter
                             break;
                         }
 
+                    MethodsUsed.Add("add");
+
                     for (int z = removeTo; z > i; z--)
                         Tokens.Remove(Tokens[z]);
                     break;
@@ -287,6 +289,7 @@ class Converter
                     AddToken("sizeof" + Tokens[i + 1] + Tokens[i + 2] + Tokens[i + 3]);
                     for (int j = i; j < i + 3; j++)
                         Tokens.Remove(Tokens[j]);
+                    MethodsUsed.Add("length");
                     break;
                 case "C":
                     if (Tokens[i + 1] == "{")
