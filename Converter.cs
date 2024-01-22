@@ -3,7 +3,7 @@ using Pine;
 class Converter
 {
     public static List<string> ConvertedTokens = new List<string>();
-    private static List<string> IntsDeclared = new List<string>();
+    public static List<string> IntsDeclared = new List<string>();
     private static List<string> StringsDeclared = new List<string>();
     private static List<string> FloatsDeclared = new List<string>();
     private static List<string> FunctionsDeclared = new List<string>();
@@ -159,6 +159,9 @@ class Converter
                         FunctionsDeclared.Add(Tokens[i + 2]);
                         Tokens.Remove(Tokens[i + 2]);
                     }
+                    break;
+                case "std":
+                    stdLib.DetermineLib(Tokens, i, ConvertedTokens);
                     break;
                 case "main":
                     AddToken("main");

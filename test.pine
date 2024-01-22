@@ -1,6 +1,6 @@
+std math
+
 fn main(args){
-    int array[] = {0, 19, 251};
-    writeLine(array[2]);
-    array[length(array)] = 255;
-    write(array[length(array)]);
+    int sqrt_nine = sqrt(9);
+    writeLine(sqrt_nine);
 }
