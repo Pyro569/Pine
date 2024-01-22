@@ -6,4 +6,7 @@ fn main(args){
     
     int two_squared = pow(2, 8);
     writeLine(two_squared);
+
+    int log_value = log(7, 343);
+    writeLine(log_value);
 }

@@ -10,6 +10,7 @@ class stdLib
 
                 Converter.IntsDeclared.Add("sqrt");
                 Converter.IntsDeclared.Add("pow");
+                Converter.IntsDeclared.Add("log");
                 break;
         }
     }
